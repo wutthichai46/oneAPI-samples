@@ -144,7 +144,11 @@ checks to find missing dependencies and permissions errors.
 The include folder is located at `%ONEAPI_ROOT%\dev-utilities\latest\include` on your development system.
 
 ### Running Samples in DevCloud
-If running a sample in the Intel DevCloud, remember that you must specify the compute node (CPU, GPU, FPGA) and run in batch or interactive mode. For more information, see the [Intel&reg; oneAPI Base Toolkit Get Started Guide](https://devcloud.intel.com/oneapi/get-started/base-toolkit/)
+If running a sample in the Intel DevCloud, remember that you must specify the compute node (CPU, GPU, FPGA) and run in batch or interactive mode. 
+
+For specific instructions, jump to [Run the sample in the DevCloud](#run-on-devcloud)
+
+For more information, see the [Intel&reg; oneAPI Base Toolkit Get Started Guide](https://devcloud.intel.com/oneapi/get-started/base-toolkit/)
 
 
 ### Using Visual Studio Code*  (Optional)
@@ -217,4 +221,43 @@ Time parallel: 0.159223 sec
 
 ```
 
+### Running the sample in the DevCloud<a name="run-on-devcloud"></a>
 
+#### Build and run
+
+To launch build and run jobs on DevCloud submit scripts to PBS through the qsub utility.
+> Note that all parameters are already specified in the build and run scripts.
+
+1. Build the sample on a gpu node.
+
+    ```bash
+    qsub build.sh
+    ```
+
+2. When the build job completes, there will be a `build.sh.oXXXXXX` file in the directory. After the build job completes, run the sample on a gpu node:
+
+    ```bash
+    qsub run.sh
+    ```
+
+#### Additional information
+
+1. In order to inspect the job progress, use the qstat utility.
+
+    ```bash
+    watch -n 1 qstat -n -1
+    ```
+
+    > Note: The watch `-n 1` command is used to run `qstat -n -1` and display its results every second.
+2. When a job terminates, a couple of files are written to the disk:
+
+    <script_name>.sh.eXXXX, which is the job stderr
+
+    <script_name>.sh.oXXXX, which is the job stdout
+
+    > Here XXXX is the job ID, which gets printed to the screen after each qsub command.
+3. To inspect the output of the sample use cat command.
+
+    ```bash
+    cat run.sh.oXXXX
+    ```
