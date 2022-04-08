@@ -56,7 +56,7 @@
           "make report_usm -f Makefile.fpga"
         ]
       }
-    ],
+    ]
     "windows": [
       {
         "id": "usm",
